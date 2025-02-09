@@ -1,4 +1,3 @@
-// background.js
 // Check if API key exists when extension loads
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -26,7 +25,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       }
 
       const selectedText = info.selectionText;
-      
+
       try {
         const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
           method: 'POST',
@@ -39,7 +38,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             messages: [
               {
                 "role": "system",
-                "content": "Você é um assistente cuidado que sumarize textos"
+                "content": "Você é um assistente cuidadoso que sumariza textos"
               },
               {
                 "role": "user",
@@ -53,16 +52,24 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
-        
+        // Decodificar a resposta como UTF-8
+        const buffer = await response.arrayBuffer();
+        const decoder = new TextDecoder('utf-8');
+        const text = decoder.decode(buffer);
+        const data = JSON.parse(text);
+
         if (data.choices && data.choices[0]) {
           const summary = data.choices[0].message.content;
-          // Create a more user-friendly alert
+
+          // Criar uma janela popup para exibir o resumo
           await chrome.windows.create({
             url: `data:text/html,
               <html>
+                <head>
+                  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                </head>
                 <body style="padding: 20px; font-family: Arial;">
-                  <h3>Summary:</h3>
+                  <h3>Resumo:</h3>
                   <p style="white-space: pre-wrap;">${summary}</p>
                 </body>
               </html>`,
@@ -73,11 +80,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         }
       } catch (error) {
         console.error('API Error:', error);
-        alert(`Error: ${error.message}. Please check if your API key is correct.`);
+        alert(`Erro: ${error.message}. Por favor, verifique se sua chave API está correta.`);
       }
     } catch (error) {
       console.error('Storage Error:', error);
-      alert('Error accessing API key. Please try setting it again.');
+      alert('Erro ao acessar a chave API. Por favor, tente configurá-la novamente.');
     }
   }
 });
