@@ -66,7 +66,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             url: `data:text/html,
               <html>
                 <head>
-                  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                  <meta charset="utf-8" />
                 </head>
                 <body style="padding: 20px; font-family: Arial;">
                   <h3>Resumo:</h3>
