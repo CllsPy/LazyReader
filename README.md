@@ -1,2 +1,2 @@
-# Text2Shorts
+# LazyReader
 Summary Text Using AI
