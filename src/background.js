@@ -66,11 +66,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             url: `data:text/html,
               <html>
                 <head>
-                  <meta charset="utf-8" />
+                 <meta charset="UTF-8">
                 </head>
-                <body style="padding: 20px; font-family: Arial;">
+                <body>
                   <h3>Resumo:</h3>
-                  <p style="white-space: pre-wrap;">${summary}</p>
+                  <p>${summary}</p>
                 </body>
               </html>`,
             type: 'popup',
