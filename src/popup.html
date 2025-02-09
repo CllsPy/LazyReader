@@ -1,22 +1,29 @@
+// popup.html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text Summarizer</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+    }
+    #apiKey {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    #status {
+      color: green;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div id="container">
-    <h1>Text Summarizer</h1>
-    <p>Click "Summarize" to summarize the selected text.</p>
-    <button id="summarizeBtn">Summarize</button>
-    <div id="summaryResult">
-      <h3>Summary:</h3>
-      <p id="summaryText"></p>
-    </div>
-  </div>
-
+  <h3>Text Summarizer Settings</h3>
+  <input type="password" id="apiKey" placeholder="Enter your Mistral API key">
+  <button id="saveKey">Save API Key</button>
+  <div id="status">API key is saved!</div>
   <script src="popup.js"></script>
 </body>
 </html>

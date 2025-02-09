@@ -1,31 +1,29 @@
-const summarizeButton = document.getElementById('summarizeBtn');
-const summaryText = document.getElementById('summaryText');
+// popup.js
+// Load saved API key when popup opens
+document.addEventListener('DOMContentLoaded', () => {
+  chrome.storage.local.get(['mistralApiKey'], (result) => {
+    if (result.mistralApiKey) {
+      document.getElementById('apiKey').value = result.mistralApiKey;
+      document.getElementById('status').style.display = 'block';
+    }
+  });
+});
 
-// Fetch selected text from storage when the popup is opened
-chrome.storage.local.get('selectedText', ({ selectedText }) => {
-  if (selectedText) {
-    console.log('Selected text retrieved:', selectedText);
-    summarizeButton.addEventListener('click', async () => {
-      try {
-        const response = await fetch('sk-c2e8086adaf84cd3873ddabec9012480', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer YOUR_DEEPSEEK_API_KEY'
-          },
-          body: JSON.stringify({ text: selectedText })
-        });
+document.getElementById('saveKey').addEventListener('click', () => {
+  const apiKey = document.getElementById('apiKey').value;
+  if (!apiKey) {
+    alert('Please enter an API key');
+    return;
+  }
 
-        const data = await response.json();
-
-        if (data && data.summary) {
-          summaryText.textContent = data.summary;
-        } else {
-          summaryText.textContent = 'No summary available.';
-        }
-      } catch (error) {
-        summaryText.textContent = 'Error summarizing text: ' + error.message;
+  // Save to local storage instead of sync
+  chrome.storage.local.set({ mistralApiKey: apiKey }, () => {
+    document.getElementById('status').style.display = 'block';
+    // Verify the save
+    chrome.storage.local.get(['mistralApiKey'], (result) => {
+      if (result.mistralApiKey === apiKey) {
+        console.log('API key saved successfully');
       }
     });
-  }
+  });
 });
