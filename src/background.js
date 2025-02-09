@@ -42,7 +42,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
               },
               {
                 "role": "user",
-                "content": `Por favor, sumarize este texto em não mais que 250 palavras. No idioma pt-br: ${selectedText}`
+                "content": `Por favor, sumarize este texto usando bullent-points: ${selectedText}`
               }
             ]
           })
