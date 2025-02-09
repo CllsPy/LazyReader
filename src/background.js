@@ -39,11 +39,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             messages: [
               {
                 "role": "system",
-                "content": "You are a helpful assistant that summarizes text concisely."
+                "content": "Você é um assistente cuidado que sumarize textos"
               },
               {
                 "role": "user",
-                "content": `Please summarize the following text in a concise way: ${selectedText}`
+                "content": `Por favor, sumarize este texto em não mais que 250 palavras. No idioma pt-br: ${selectedText}`
               }
             ]
           })
